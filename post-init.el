@@ -27,11 +27,12 @@
   :after dired)
 
 (use-package perspective-exwm
-  :straight t)
+  :straight t
+  :after perspective)
 
 (use-package exwm
   :straight t
-  :defer 0
+  :after perspective-exwm
   :hook
   (exwm-update-title . (lambda () (exwm-workspace-rename-buffer exwm-title)))
   :config
@@ -45,6 +46,7 @@
 
 (use-package perspective
   :straight t
+  :defer t
   :custom (persp-mode-prefix-key (kbd "C-x C-x"))
   :bind
   ("C-x b" . persp-list-buffers)
@@ -102,7 +104,7 @@
 
 (use-package magit
   :straight t
-  :defer 0)
+  :defer t)
 
 (use-package embark
   :straight t

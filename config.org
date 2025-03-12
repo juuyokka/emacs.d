@@ -105,11 +105,12 @@ The holy grail of Emacs packages. EXWM allows Emacs to manage X11 windows as buf
 
 #+begin_src emacs-lisp
   (use-package perspective-exwm
-    :straight t)
+    :straight t
+    :after perspective)
 
   (use-package exwm
     :straight t
-    :defer 0
+    :after perspective-exwm
     :hook
     (exwm-update-title . (lambda () (exwm-workspace-rename-buffer exwm-title)))
     :config
@@ -129,6 +130,7 @@ Create workspace-like "perspectives" that each have their own buffer list.
 #+begin_src emacs-lisp
   (use-package perspective
     :straight t
+    :defer t
     :custom (persp-mode-prefix-key (kbd "C-x C-x"))
     :bind
     ("C-x b" . persp-list-buffers)
@@ -242,7 +244,7 @@ Adds descriptions next to completion candidates in Vertico.
 #+begin_src emacs-lisp
   (use-package magit
     :straight t
-    :defer 0)
+    :defer t)
 #+end_src
 
 *** Embark
