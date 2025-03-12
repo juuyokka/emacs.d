@@ -1,6 +1,6 @@
-*
-!README.md
-!early-init.el
-!init.el
-!.images/
-!.LICENSE
+autosave/
+eln-cache/
+elpa/
+straight/*
+!straight/versions/
+transient/
