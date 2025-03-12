@@ -35,6 +35,10 @@ I use =straight.el= for package management instead of the builtin =package.el=.
   (setq package-enable-at-startup nil)
 #+end_src
 
+#+begin_src emacs-lisp :tangle post-early-init.el
+  (setq minimal-emacs-package-initialize-and-refresh nil)
+#+end_src
+
 * Packages
 
 ** Org Mode
