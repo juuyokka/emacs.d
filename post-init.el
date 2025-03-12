@@ -28,7 +28,10 @@
 
 (use-package perspective-exwm
   :straight t
-  :after perspective)
+  :after perspective
+  :custom
+  (perspective-exwm-override-initial-name
+   '((0 . "main"))))
 
 (use-package exwm
   :straight t
