@@ -246,6 +246,20 @@ Adds descriptions next to completion candidates in Vertico.
 
 ** Extra Functionality
 
+*** Eat
+
+#+begin_src emacs-lisp
+  (use-package eat
+    :straight t
+    :custom
+    (eat-shell "/run/current-system/sw/bin/nu")
+    :bind
+    (:map eat-semi-char-mode-map
+  	("<escape>" . eat-self-input))
+    :config
+    (unbind-key "M-d" eat-semi-char-mode-map))
+#+end_src
+
 *** Magit
 
 #+begin_src emacs-lisp

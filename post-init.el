@@ -105,6 +105,16 @@
   :straight t
   :mode "\\.nix\\'")
 
+(use-package eat
+  :straight t
+  :custom
+  (eat-shell "/run/current-system/sw/bin/nu")
+  :bind
+  (:map eat-semi-char-mode-map
+	("<escape>" . eat-self-input))
+  :config
+  (unbind-key "M-d" eat-semi-char-mode-map))
+
 (use-package magit
   :straight t
   :defer t)
