@@ -4,6 +4,7 @@
  ("consult" . "d557305b730f7666d46bc3eb04c87cfcc493a8e5")
  ("dash.el" . "1de9dcb83eacfb162b6d9a118a4770b1281bcd84")
  ("doom-modeline" . "0438c2ba3a9e6d4a296601dde99d3aa35caafbf8")
+ ("eat" . "c8d54d649872bfe7b2b9f49ae5c2addbf12d3b99")
  ("el-get" . "ec5cba8d965980b2c47a8a11dce30dd5e845ed2a")
  ("emacs-async" . "b99658e831bc7e7d20ed4bb0a85bdb5c7dd74142")
  ("emacsmirror-mirror" . "93134bfec109035db8fd47f23a7084d95ccc8415")
