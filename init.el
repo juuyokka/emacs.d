@@ -15,11 +15,9 @@
 ;;; Code:
 
 ;;; Load pre-init.el
-(setq minimal-emacs--stage "init.el")
 (if (fboundp 'minimal-emacs-load-user-init)
     (minimal-emacs-load-user-init "pre-init.el")
   (error "The early-init.el file failed to loaded"))
-(setq minimal-emacs--stage "init.el")
 
 ;;; Before package
 
@@ -44,16 +42,14 @@
 (when (bound-and-true-p minimal-emacs-package-initialize-and-refresh)
   ;; Initialize and refresh package contents again if needed
   (package-initialize)
-  (unless (seq-empty-p package-archive-contents)
-    (package-refresh-contents))
-
   ;; Install use-package if necessary
   (unless (package-installed-p 'use-package)
+    (unless (seq-empty-p package-archive-contents)
+      (package-refresh-contents))
     (package-install 'use-package))
 
   ;; Ensure use-package is available
-  (eval-when-compile
-    (require 'use-package)))
+  (require 'use-package))
 
 ;;; Features, warnings, and errors
 
@@ -94,13 +90,13 @@
       compilation-ask-about-save nil
       compilation-scroll-output 'first-error)
 
+;; Recenter to the middle of the window for `compile-goto-error', which is also
+;; used by `wgrep' and `embark-export'.
+(setq next-error-recenter '(4))
+
 ;;; Misc
 
 (setq whitespace-line-column nil)  ; whitespace-mode
-
-;; I reduced the default value of 9 to simplify the font-lock keyword,
-;; aiming to improve performance.
-(setq rainbow-delimiters-max-face-count 5)
 
 ;; Can be activated with `display-line-numbers-mode'
 (setq-default display-line-numbers-width 3)
@@ -371,10 +367,6 @@
 ;; Makes Emacs omit the load average information from the mode line.
 (setq display-time-default-load-average nil)
 
-;; Display the current line and column numbers in the mode line
-(setq line-number-mode t)
-(setq column-number-mode t)
-
 ;;; Filetype
 
 ;; Do not notify the user each time Python tries to guess the indentation offset
@@ -413,6 +405,8 @@
       ediff-split-window-function 'split-window-horizontally)
 
 ;;; Help
+
+(setq help-window-select t)  ;; Focus new help windows when opened
 
 ;; Enhance `apropos' and related functions to perform more extensive searches
 (setq apropos-do-all t)

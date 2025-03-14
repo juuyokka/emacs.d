@@ -75,21 +75,16 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 (setq debug-on-error minimal-emacs-debug)
 
 (defvar minimal-emacs--success nil)
-(defvar minimal-emacs--stage "early-init.el")
 (defun minimal-emacs--check-success ()
   "Verify that the Emacs configuration has loaded successfully."
   (unless minimal-emacs--success
     (cond
-     ((and (or (string= minimal-emacs--stage "pre-early-init.el")
-               (string= minimal-emacs--stage "early-init.el")
-               (string= minimal-emacs--stage "post-early-init.el"))
-           (or (file-exists-p (expand-file-name "~/.emacs.el"))
-               (file-exists-p (expand-file-name "~/.emacs"))))
+     ((or (file-exists-p (expand-file-name "~/.emacs.el"))
+          (file-exists-p (expand-file-name "~/.emacs")))
       (error "Emacs ignored loading 'init.el'. Please ensure that files such as ~/.emacs or ~/.emacs.el do not exist, as they may be preventing Emacs from loading the 'init.el' file"))
 
      (t
-      (error "Configuration error in: '%s'. Debug by starting Emacs with: emacs --debug-init"
-             minimal-emacs--stage)))))
+      (error "Configuration error. Debug by starting Emacs with: emacs --debug-init")))))
 (add-hook 'emacs-startup-hook #'minimal-emacs--check-success 102)
 
 (defun minimal-emacs-load-user-init (filename)
@@ -97,11 +92,9 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
   (let ((init-file (expand-file-name filename
                                      minimal-emacs-user-directory)))
     (when (file-exists-p init-file)
-      (setq minimal-emacs--stage (file-name-nondirectory init-file))
-      (load init-file nil t))))
+      (load init-file nil :no-message))))
 
 (minimal-emacs-load-user-init "pre-early-init.el")
-(setq minimal-emacs--stage "early-init.el")
 
 (setq custom-theme-directory
       (expand-file-name "themes/" minimal-emacs-user-directory))
@@ -135,8 +128,7 @@ When set to non-nil, Emacs will automatically call `package-initialize' and
 
 (setq native-comp-warning-on-missing-source minimal-emacs-debug
       native-comp-async-report-warnings-errors (or minimal-emacs-debug 'silent)
-      native-comp-verbose (if minimal-emacs-debug 1 0)
-      native-comp-debug (if minimal-emacs-debug 1 0))
+      native-comp-verbose (if minimal-emacs-debug 1 0))
 
 (setq jka-compr-verbose minimal-emacs-debug)
 (setq byte-compile-warnings minimal-emacs-debug
@@ -389,13 +381,11 @@ this stage of initialization."
 (setq use-package-always-ensure t)
 (setq use-package-enable-imenu-support t)
 (setq package-archives '(("melpa" . "https://melpa.org/packages/")
-                         ("melpa-stable" . "https://stable.melpa.org/packages/")
                          ("gnu" . "https://elpa.gnu.org/packages/")
                          ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 (customize-set-variable 'package-archive-priorities '(("gnu"    . 99)
                                                       ("nongnu" . 80)
-                                                      ("melpa-stable" . 70)
-                                                      ("melpa"  . 0)))
+                                                      ("melpa"  . 70)))
 
 ;;; Load post-early-init.el
 (minimal-emacs-load-user-init "post-early-init.el")
