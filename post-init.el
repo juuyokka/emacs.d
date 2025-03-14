@@ -237,3 +237,9 @@
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
 (start-process-shell-command "xsetroot" nil "xsetroot -cursor_name left_ptr")
+
+(add-to-list 'display-buffer-alist
+             '("^\\*Org Src"
+               (display-buffer-reuse-window
+                display-buffer-pop-up-window
+                display-buffer-below-selected)))
